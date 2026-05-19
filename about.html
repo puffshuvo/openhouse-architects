@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About – Openhouse Architects & Engineers</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #6b6460;
+    --accent: #8b7355;
+    --line: #c8c0b8;
+    --card-bg: #ffffff;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 13px;
+    line-height: 1.75;
+    letter-spacing: 0.03em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO SECTION ── */
+  .hero-section {
+    width: 100%;
+    position: relative;
+    height: 100vh;
+  }
+
+  .hero-parallax-wrap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+  }
+
+  .hero {
+    width: 100%;
+    height: 100%;
+    position: sticky;
+    top: 0;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  .hero img {
+    width: 100%;
+    height: 110%;
+    object-position: center center;
+    filter: grayscale(100%) contrast(1.05);
+    display: block;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* ── CONTENT SECTION ── */
+  .content-section {
+    position: relative;
+    background: var(--cream);
+    z-index: 1;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 2000px;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 860px;
+    margin: 0;
+    padding: 0 40px;
+  }
+
+  /* ── INTRO SECTION ── */
+  .intro {
+    padding: 10px 0 64px;
+  }
+  .intro h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+  .intro p {
+    max-width: 520px;
+    color: var(--ink);
+    font-size: 12.5px;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SECTION HEADING ── */
+  .section-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    padding-left: 40px;
+  }
+
+  /* ── TEAM SECTION ── */
+  .team-section {
+    padding: 10px 0 64px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 32px 24px;
+    padding: 0 40px;
+    width: 66%;
+    margin-left: auto;
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: opacity, transform;
+  }
+  .team-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    will-change: auto;
+  }
+
+  .team-card img {
+    width: 8rem;
+    height: 10rem;
+    object-fit: cover;
+    object-position: top;
+    filter: grayscale(100%);
+    display: block;
+    border: 1px solid var(--line);
+    transform: translateZ(0);
+  }
+
+  .team-card .name {
+    margin-top: 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .team-card .role {
+    font-size: 9.5px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 12px 40px 52px;
+  }
+
+  /* ── AFFILIATE SECTION ── */
+  .affiliate-section {
+    padding: 0 0 80px;
+  }
+
+  .affiliate-desc {
+    max-width: 520px;
+    color: var(--ink);
+    font-size: 12.5px;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    padding: 0 40px;
+    margin-bottom: 40px;
+  }
+
+  .affiliate-list {
+    padding: 0 40px;
+  }
+
+  .affiliate-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding: 14px 0 10px;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: opacity, transform;
+  }
+  .affiliate-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+    will-change: auto;
+  }
+
+  .affiliate-name {
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+  }
+
+  .affiliate-link {
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    padding-bottom: 2px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .affiliate-link:hover {
+    color: var(--accent);
+  }
+
+  /* ==========================================================================
+     Top Header with Dropdown Navigation
+     ========================================================================== */
+  .top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 32px 56px;
+    z-index: 100;
+    display: flex;
+    align-items: flex-start;
+    gap: 180px;
+  }
+
+  .top-header .logo {
+    position: relative;
+    z-index: 101;
+  }
+
+  .top-header .logo img {
+    height: 48px;
+    width: auto;
+    display: block;
+  }
+
+  /* Dropdown Navigation */
+  .dropdown-nav {
+    --nav-border-offset: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 32px 56px;
+    padding-left: calc(56px + 48px + -45px);
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 300px;
+    padding-bottom: 32px;
+    border-left: none;
+  }
+
+  .dropdown-nav::before {
+    content: "";
+    position: absolute;
+    left: 50px;
+    top: 32px;
+    bottom: 32px;
+    width: 2px;
+    background: #382200;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .top-header:hover .dropdown-nav {
+    transform: translateY(0);
+  }
+
+  .dropdown-nav a {
+    text-decoration: none;
+    color: #382200;
+    letter-spacing: 3px;
+    font-size: 15px;
+    font-weight: 400;
+    transition: all 0.25s ease;
+    padding: 8px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dropdown-nav a:hover,
+  .dropdown-nav a:focus {
+    opacity: 0.7;
+    padding-left: 10px;
+  }
+
+  .dropdown-nav a.active {
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  /* ==========================================================================
+     Footer
+     ========================================================================== */
+  .site-footer {
+    background: #fffefd;
+    border-top: 1px solid rgba(214, 177, 123, 0.2);
+    padding: 64px 56px 32px;
+    color: #3a270a;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.4fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(214, 177, 123, 0.15);
+  }
+
+  .footer-brand img {
+    height: 40px;
+    width: auto;
+    display: block;
+    margin-bottom: 16px;
+    opacity: 0.85;
+  }
+
+  .footer-brand p {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.45;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 4px;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: #332003;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.55;
+    transition: opacity 0.25s ease, padding-left 0.25s ease;
+  }
+
+  .footer-links a:hover {
+    opacity: 1;
+    padding-left: 6px;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .footer-contact span,
+  .footer-contact a {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #4e3208;
+    opacity: 0.55;
+    text-decoration: none;
+    line-height: 1.6;
+    transition: opacity 0.25s ease;
+  }
+
+  .footer-contact a:hover {
+    opacity: 1;
+  }
+
+  .footer-bottom {
+    padding-top: 28px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    opacity: 0.3;
+    text-transform: uppercase;
+  }
+
+  /* ==========================================================================
+     Responsive
+     ========================================================================== */
+  @media (max-width: 1024px) {
+    .top-header {
+      padding: 20px 24px;
+      gap: 0;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .top-header .logo img {
+      height: 36px;
+    }
+
+    /* Dropdown — full width, slides down from top */
+    .dropdown-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      padding: 80px 32px 32px 32px;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 99;
+      min-width: unset;
+    }
+
+    .dropdown-nav::before {
+      left: 28px;
+      top: 76px;
+      bottom: 28px;
+    }
+
+    .dropdown-nav a {
+      color: #382200;
+      font-size: 14px;
+      letter-spacing: 2px;
+      padding: 8px 0;
+    }
+
+    .dropdown-nav.nav-open {
+      transform: translateY(0);
+    }
+
+    /* Hamburger button */
+    .nav-toggle-btn {
+      display: flex;
+      position: relative;
+      z-index: 102;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-toggle-btn .bar {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #d6b17b;
+      border-radius: 2px;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.25s ease,
+                  width 0.3s ease;
+      transform-origin: center;
+    }
+
+    .nav-toggle-btn.is-open .bar:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    .nav-toggle-btn.is-open .bar:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+    .nav-toggle-btn.is-open .bar:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      height: 60vh;
+    }
+
+    .hero img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .container {
+      padding: 0 20px;
+    }
+
+    .intro {
+      padding: 24px 0 40px;
+    }
+
+    .intro h1 {
+      font-size: 18px;
+      letter-spacing: 0.1em;
+    }
+
+    .intro p {
+      font-size: 12px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      padding-left: 20px;
+    }
+
+    .divider {
+      margin: 12px 20px 40px;
+    }
+
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+      margin-left: 0;
+      padding: 0 20px;
+      gap: 24px 16px;
+    }
+
+    .team-card img {
+      width: 100%;
+      height: 9rem;
+    }
+
+    .team-card .name {
+      font-size: 10px;
+    }
+
+    .team-card .role {
+      font-size: 9px;
+    }
+
+    .affiliate-desc {
+      padding: 0 20px;
+      font-size: 12px;
+    }
+
+    .affiliate-list {
+      padding: 0 20px;
+    }
+
+    .affiliate-name {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+
+    .affiliate-link {
+      font-size: 10px;
+    }
+
+    .site-footer {
+      padding: 48px 24px 28px;
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .top-header {
+      padding: 14px 16px;
+    }
+
+    .top-header .logo img {
+      height: 28px;
+    }
+
+    .nav-toggle-btn {
+      width: 30px;
+      height: 30px;
+      margin-top: 2px;
+    }
+
+    .nav-toggle-btn .bar {
+      width: 18px;
+    }
+
+    .dropdown-nav {
+      padding: 58px 20px 16px 32px;
+      gap: 8px;
+      min-width: unset;
+      width: 100%;
+    }
+
+    .dropdown-nav::before {
+      left: 18px;
+      top: 58px;
+      bottom: 16px;
+    }
+
+    .dropdown-nav a {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      padding: 6px 0;
+    }
+
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px 12px;
+      padding: 0 16px;
+    }
+
+    .team-card img {
+      height: 8rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .top-header {
+      padding: 16px 16px;
+    }
+
+    .top-header .logo img {
+      height: 28px;
+    }
+
+    .nav-toggle-btn {
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-toggle-btn .bar {
+      width: 18px;
+    }
+
+    .dropdown-nav {
+      padding: 70px 24px 24px 24px;
+    }
+
+    .dropdown-nav::before {
+      left: 20px;
+      top: 66px;
+      bottom: 20px;
+    }
+
+    .dropdown-nav a {
+      font-size: 13px;
+      letter-spacing: 1.5px;
+    }
+  }
+
+  /* Desktop — hide hamburger */
+  @media (min-width: 1025px) {
+    .nav-toggle-btn {
+      display: none;
+    }
+
+    .top-header {
+      gap: 180px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== TOP HEADER WITH DROPDOWN NAV ==================== -->
+  <header class="top-header">
+    <a href="index.html" class="logo">
+      <img src="image/logo.png" alt="Openhouse Architects" />
+    </a>
+    <nav class="dropdown-nav">
+      <a href="index.html" class="active">HOME</a>
+      <a href="about.html">ABOUT</a> 
+      <a href="index.html#projects">PROJECTS</a>
+      <a href="index.html#contacts">CONTACTS</a>
+    </nav>
+  </header>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero-section">
+    <div class="hero-parallax-wrap">
+      <div class="hero">
+        <img src="team.jpeg" alt="Openhouse Team" fetchpriority="high" decoding="async"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTENT SECTION ========== -->
+  <section class="content-section">
+
+    <!-- INTRO -->
+    <div class="container">
+      <section class="intro">
+        <h1>Openhouse Architects &amp; Engineers</h1>
+        <p>
+          We are an architecture and engineering firm that provides a full array
+          of services from building design and construction to interior design
+          and all the structural, electrical, and plumbing design needs of a
+          building. Our company takes pride in its commitment to customer
+          satisfaction and our team of experienced professionals places a high
+          value on quality work.
+        </p>
+      </section>
+    </div>
+
+    <!-- TEAM -->
+    <section class="team-section">
+      <h2 class="section-title">Team</h2>
+
+      <div class="team-grid" id="teamGrid">
+
+        <!-- Row 1 -->
+        <div class="team-card">
+          <img src="pic final/Engr Farhana mam.jpeg" alt="Farhana Najrul" loading="lazy" decoding="async"/>
+          <div class="name">Farhana Najrul</div>
+          <div class="role">Managing Director</div>
+          <div class="role">B.Sc In ME (KU)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/uzzal.jpg" alt="Uzzal Singha" loading="lazy" decoding="async"/>
+          <div class="name">Uzzal Singha</div>
+          <div class="role">Chief Executive Architect</div>
+          <div class="role">B.Arch (BUET)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/sajal'.jpg" alt="Sajal Singha" loading="lazy" decoding="async"/>
+          <div class="name">Sajal Singha</div>
+          <div class="role">B.Sc In EEE (MU)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/emon.jpg" alt="Emon Shaha" loading="lazy" decoding="async"/>
+          <div class="name">Emon Shaha</div>
+          <div class="role">B.Arch (DIU)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/kazi.JPG" alt="Kazi Akegur Rahaman Shuvo" loading="lazy" decoding="async"/>
+          <div class="name">Kazi Akegur Rahaman Shuvo</div>
+          <div class="role">Diploma In ME (SPI)</div>
+          <div class="role">B.Sc In ME (NUB)</div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="team-card">
+          <img src="pic final/jashim.jpg" alt="Jashim Uddin" loading="lazy" decoding="async"/>
+          <div class="name">Jashim Uddin</div>
+          <div class="role">Architect</div>
+          <div class="role">B.Arch (HSTU)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/faruk2.jpg" alt="Faruk Ahmed" loading="lazy" decoding="async"/>
+          <div class="name">Faruk Ahmed</div>
+          <div class="role">Architect</div>
+          <div class="role">B.Arch (HSTU)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/sumi.jpg" alt="Sushmita Sumi" loading="lazy" decoding="async"/>
+          <div class="name">Sushmita Sumi</div>
+          <div class="role">Architect</div>
+          <div class="role">B.Arch (ASTU)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/tahsin.jpg" alt="Tahsin Alam" loading="lazy" decoding="async"/>
+          <div class="name">Tahsin Alam</div>
+          <div class="role">Architect</div>
+          <div class="role">B.Arch (MIST)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/niha.jpg" alt="Neeha" loading="lazy" decoding="async"/>
+          <div class="name">Neeha</div>
+          <div class="role">B.Arch (MIST)</div>
+        </div>
+        <div class="team-card">
+          <img src="pic final/subrata.jpg" alt="Subroto" loading="lazy" decoding="async"/>
+          <div class="name">Subroto</div>
+          <div class="role">Assistant</div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="divider"/>
+
+    <!-- AFFILIATE -->
+    <section class="affiliate-section">
+      <h2 class="section-title">Affiliate</h2>
+
+      <p class="affiliate-desc">
+        We are an architecture and engineering firm that provides a full array
+        of services from building design and construction to interior design
+        and all the structural, electrical, and plumbing design needs of a
+        building. Our company takes pride in its commitment to customer
+        satisfaction and our team of experienced professionals places a high
+        value on quality work.
+      </p>
+
+      <div class="affiliate-list" id="affiliateList">
+        <div class="affiliate-item">
+          <span class="affiliate-name">Archimart</span>
+          <a class="affiliate-link" href="https://archimartbd.com/">View Website</a>
+        </div>
+        <div class="affiliate-item">
+          <span class="affiliate-name">Openhouse Construction</span>
+          <a class="affiliate-link" href="https://openhousegroupbd.com/index">View Website</a>
+        </div>
+        <div class="affiliate-item">
+          <span class="affiliate-name">Architecture In Documents (AID)</span>
+          <a class="affiliate-link" href="https://archdocu.com/">View Website</a>
+        </div>
+      </div>
+    </section>
+
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="image/logo.png" alt="Openhouse Architects" />
+        </a>
+        <p>Architecture · Interior · Engineering</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html" class="active">HOME</a>
+      <a href="about.html">ABOUT</a> 
+      <a href="index.html#projects">PROJECTS</a>
+      <a href="index.html#contacts">CONTACTS</a>
+      </div>
+
+      <div class="footer-contact">
+        <span>10/A, Haque Chamber, Panthapath, Dhaka</span>
+        <a href="mailto:openhouse.ar.en@gmail.com">openhouse.ar.en@gmail.com</a>
+        <a href="tel:+8801712985149">+880 1712 985 149</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2025 Openhouse Architects & Engineers. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const index = [...el.parentElement.children].indexOf(el);
+          requestAnimationFrame(() => {
+            setTimeout(() => el.classList.add('visible'), index * 60);
+          });
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.team-card, .affiliate-item').forEach(el => observer.observe(el));
+  </script>
+  
+  <script src="toggle.js"></script>
+</body>
+</html>
