@@ -36,7 +36,7 @@ html {
 }
 
 body {
-    font-family: var(--font-body);
+    font-family: 'Manrope', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
     line-height: 1.6;
@@ -135,7 +135,7 @@ body {
     align-items: center;
     gap: var(--spacing-sm);
     font-size: 0.95rem;
-    font-family: var(--font-body);
+    font-family: 'Manrope', sans-serif;
     font-weight: 300;
     letter-spacing: 0.03em;
     margin-bottom: var(--spacing-sm);
@@ -240,7 +240,7 @@ body {
 }
 
 .project-title {
-    font-family: var(--font-display);
+    font-family: 'Manrope', sans-serif;
     font-size: 1.125rem;
     font-weight: 400;
     color: var(--color-text);
