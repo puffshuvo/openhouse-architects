@@ -18,6 +18,7 @@ html {
 body {
   height: 100%;
   font-family: 'Manrope', sans-serif;
+  font-weight: 300;
   background: #000;
   color: #d6b17b;
   overflow-x: hidden;
@@ -380,7 +381,7 @@ body {
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    font-weight: 300;
+    font-weight: 10;
     letter-spacing: 8px;
     margin-bottom: 80px;
     color: #63460e;
@@ -413,7 +414,7 @@ body {
 
 .project-category h3 {
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 100;
   letter-spacing: 3px;
   color: #63460e;
   text-transform: capitalize;

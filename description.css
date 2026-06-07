@@ -17,7 +17,7 @@ body {
   font-family: 'Manrope', sans-serif;
   background: var(--white);
   color: var(--ink);
-  font-weight: 500;
+  font-weight: 300;
   letter-spacing: 0.02em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
