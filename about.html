@@ -221,6 +221,22 @@
     text-underline-offset: 4px;
   }
 
+  /* Affiliate icon + clickable name (left) and view CTA (right) */
+  .affiliate-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .affiliate-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+  }
+
   .affiliate-link {
     font-size: 10.5px;
     letter-spacing: 0.1em;
@@ -814,16 +830,27 @@
 
       <div class="affiliate-list" id="affiliateList">
         <div class="affiliate-item">
-          <span class="affiliate-name">Archimart</span>
-          <a class="affiliate-link" href="https://archimartbd.com/">View Website</a>
+          <a class="affiliate-cta" href="https://archimartbd.com/" target="_blank" rel="noopener">
+            <img class="affiliate-icon" src="image/a1.png" alt="Archimart logo"/>
+            <span class="affiliate-name">Archimart</span>
+          </a>
+          <a class="affiliate-link" href="https://archimartbd.com/" target="_blank" rel="noopener">View Website</a>
         </div>
+
         <div class="affiliate-item">
-          <span class="affiliate-name">Openhouse Construction</span>
-          <a class="affiliate-link" href="https://openhousegroupbd.com/index">View Website</a>
+          <a class="affiliate-cta" href="https://openhousegroupbd.com/index" target="_blank" rel="noopener">
+            <img class="affiliate-icon" src="image/a2.png" alt="Openhouse Construction logo"/>
+            <span class="affiliate-name">Openhouse Construction</span>
+          </a>
+          <a class="affiliate-link" href="https://openhousegroupbd.com/index" target="_blank" rel="noopener">View Website</a>
         </div>
+
         <div class="affiliate-item">
-          <span class="affiliate-name">Architecture In Documents (AID)</span>
-          <a class="affiliate-link" href="https://archdocu.com/">View Website</a>
+          <a class="affiliate-cta" href="https://archdocu.com/" target="_blank" rel="noopener">
+            <img class="affiliate-icon" src="image/a3.png" alt="Architecture In Documents logo"/>
+            <span class="affiliate-name">Architecture In Documents (AID)</span>
+          </a>
+          <a class="affiliate-link" href="https://archdocu.com/" target="_blank" rel="noopener">View Website</a>
         </div>
       </div>
     </section>
