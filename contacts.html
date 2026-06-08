@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contacts - Openhouse Architects & Engineers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Alte+Haas+Grotesk:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff;
+      --off: #f7f6f4;
+      --ink: #111110;
+      --mid: #5a5a56;
+      --light: #c8c6c0;
+      --accent: #b8935a;
+      --accent-dark: #8c6a38;
+      --line: #e2e0db;
+      --panel: 420px;
+    }
+    html, body { height: 100%; }
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: 'Alte Haas Grotesk', 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      overflow: hidden;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* ── LEFT: FULL MAP ── */
+    .map-side {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    .map-side iframe {
+      width: 100%; height: 100%;
+      border: none;
+      filter: grayscale(25%) contrast(1.08) brightness(0.97);
+      display: block;
+    }
+
+    /* Map overlays */
+    .map-nav {
+      position: absolute; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 28px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, transparent 100%);
+    }
+    
+
+    .map-address-card {
+      position: absolute; bottom: 28px; left: 28px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 20px 24px;
+      max-width: 280px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    }
+    .mac-label {
+      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .mac-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; color: var(--ink);
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .mac-addr { font-size: 12px; color: var(--mid); line-height: 1.7; margin-bottom: 14px; }
+    .mac-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--ink); color: var(--white);
+      padding: 9px 16px; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .mac-btn:hover { background: var(--accent); }
+
+    .map-badge {
+      position: absolute; top: 20px; right: 28px;
+      background: var(--accent); color: var(--white);
+      padding: 8px 16px;
+      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* ── RIGHT: SCROLLABLE PANEL ── */
+    .right-panel {
+      width: var(--panel);
+      flex-shrink: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-left: 1px solid var(--line);
+      display: flex; flex-direction: column;
+      background: var(--white);
+      scrollbar-width: thin;
+      scrollbar-color: var(--line) transparent;
+    }
+    .right-panel::-webkit-scrollbar { width: 4px; }
+    .right-panel::-webkit-scrollbar-thumb { background: var(--line); }
+
+    /* Contact block */
+    .contact-block {
+      padding: 36px 32px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .block-label {
+      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .block-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 300; line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .block-title em { font-style: italic; color: var(--accent); }
+
+    .contact-rows { display: flex; flex-direction: column; gap: 0; }
+    .c-row {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .c-row:last-child { border-bottom: none; }
+    .c-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+    .c-icon svg { width: 13px; height: 13px; stroke: var(--accent); fill: none; stroke-width: 1.6; }
+    .c-lbl { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); margin-bottom: 3px; }
+    .c-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; color: var(--ink); line-height: 1.3;
+    }
+    .c-val a { color: inherit; text-decoration: none; }
+    .c-val a:hover { color: var(--accent); }
+    .c-sub { font-size: 11px; color: var(--mid); margin-top: 2px; }
+
+    /* Hours strip */
+    .hours-strip {
+      padding: 14px 32px;
+      background: var(--off);
+      border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .hours-strip span { font-size: 10px; color: var(--mid); letter-spacing: 0.06em; }
+    .open-badge {
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--white); background: #4a7c59;
+      padding: 3px 10px;
+    }
+
+    /* Booking section */
+    .booking-block {
+      padding: 28px 32px 36px;
+      flex: 1;
+    }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 300; line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .form-title em { font-style: italic; color: var(--accent); }
+    .form-sub { font-size: 11px; color: var(--mid); margin-bottom: 20px; }
+
+    /* Steps */
+    .steps-bar {
+      display: flex; border: 1px solid var(--line); overflow: hidden; margin-bottom: 22px;
+    }
+    .step-item {
+      flex: 1; padding: 10px 8px; text-align: center;
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--mid); border-right: 1px solid var(--line);
+      transition: all 0.2s;
+    }
+    .step-item:last-child { border-right: none; }
+    .step-item.active { background: var(--ink); color: var(--white); }
+    .step-item.done { background: var(--off); color: var(--accent); }
+    .step-num { display: block; font-size: 14px; font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+
+    /* Form steps */
+    .form-step { display: none; flex-direction: column; gap: 14px; animation: fadeUp 0.3s ease; }
+    .form-step.active { display: flex; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid); }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--line); background: var(--white);
+      font-family: 'Alte Haas Grotesk', sans-serif;
+      font-size: 13px; color: var(--ink); outline: none;
+      transition: border-color 0.2s; border-radius: 0; appearance: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    input::placeholder, textarea::placeholder { color: var(--light); }
+    textarea { resize: vertical; min-height: 72px; }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%235a5a56' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+      padding-right: 32px; cursor: pointer;
+    }
+
+    /* Date/Time */
+    .date-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .date-chip {
+      padding: 8px 4px; text-align: center;
+      border: 1px solid var(--line); cursor: pointer;
+      font-size: 10px; color: var(--mid); transition: all 0.15s;
+    }
+    .date-chip:hover { border-color: var(--accent); color: var(--ink); }
+    .date-chip.selected { background: var(--ink); color: var(--white); border-color: var(--ink); }
+    .date-chip .d-day { font-size: 16px; font-family: 'Cormorant Garamond', serif; font-weight: 300; display: block; }
+    .date-chip .d-month { font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .time-chip {
+      padding: 8px 4px; text-align: center; font-size: 11px;
+      border: 1px solid var(--line); cursor: pointer; color: var(--mid);
+      transition: all 0.15s;
+    }
+    .time-chip:hover { border-color: var(--accent); color: var(--ink); }
+    .time-chip.selected { background: var(--ink); color: var(--white); border-color: var(--ink); }
+    .time-chip.disabled { opacity: 0.3; pointer-events: none; }
+
+    /* Buttons */
+    .btn-row { display: flex; gap: 8px; margin-top: 4px; }
+    .btn {
+      flex: 1; padding: 12px 16px;
+      font-family: 'Alte Haas Grotesk', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; cursor: pointer; border: none; transition: all 0.2s;
+    }
+    .btn-primary { background: var(--ink); color: var(--white); }
+    .btn-primary:hover { background: #333; }
+    .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--line); flex: 0.5; }
+    .btn-outline:hover { border-color: var(--ink); }
+
+    /* Confirm */
+    .confirm-box {
+      background: var(--off); padding: 24px;
+      border-left: 3px solid var(--accent);
+      display: none; animation: fadeUp 0.4s ease;
+    }
+    .confirm-box.show { display: block; }
+    .confirm-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; margin-bottom: 10px; }
+    .confirm-title em { font-style: italic; color: var(--accent); }
+    .confirm-detail { font-size: 12px; color: var(--mid); line-height: 1.9; }
+    .confirm-ref { margin-top: 12px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+
+   
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(60px);
+      background: var(--ink); color: var(--white);
+      padding: 12px 24px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0; transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+      pointer-events: none; z-index: 999; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      body { overflow: auto; }
+      .layout { flex-direction: column; height: auto; overflow: visible; }
+      .map-side { height: 55vw; min-height: 260px; flex: none; }
+      .right-panel { width: 100%; height: auto; overflow: visible; border-left: none; border-top: 1px solid var(--line); }
+      .map-nav .nav-links { display: none; }
+      .map-address-card { display: none; }
+      .date-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .map-side { height: 65vw; }
+      .date-grid { grid-template-columns: repeat(2, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-block, .booking-block { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+ <!-- ==================== TOP HEADER WITH DROPDOWN NAV ==================== -->
+  <header class="top-header">
+    <a href="index.html" class="logo">
+      <img src="image/logo.png" alt="Openhouse Architects" />
+    </a>
+    <nav class="dropdown-nav">
+      <a href="index.html" class="active">HOME</a>
+      <a href="about.html">ABOUT</a> 
+      <a href="index.html#projects">PROJECTS</a>
+      <a href="contacts.html">CONTACTS</a>
+    </nav>
+  </header>
+
+<div class="layout">
+
+  <!-- ══ LEFT: FULL MAP ══ -->
+  <div class="map-side">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.8!2d90.3848782!3d23.7527191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b95c89efb827%3A0xe6b9617eb59e1eae!2sOpenhouse%20Architects%20%26%20Engineers!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
+      allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+
+   
+
+    <!-- address card bottom-left -->
+    <div class="map-address-card">
+      <div class="mac-label">— Our Office</div>
+      <div class="mac-name">Openhouse Architects & Engineers</div>
+      <div class="mac-addr">Suit A ,level 10 ,Haque chamber,West Panthapath<br>Dhaka 1215, Bangladesh</div>
+      <a class="mac-btn" href="https://www.google.com/maps/place/Openhouse+Architects+%26+Engineers/@23.7527191,90.3848782,17z" target="_blank">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Get Directions ↗
+      </a>
+    </div>
+
+    
+  </div>
+
+  <!-- ══ RIGHT: PANEL ══ -->
+  <div class="right-panel">
+
+    <!-- Contact Info -->
+    <div class="contact-block">
+      <div class="block-label">— Reach Us</div>
+      <div class="block-title">Let's build something <em>timeless</em></div>
+
+      <div class="contact-rows">
+        <div class="c-row">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="c-lbl">Phone</div>
+            <div class="c-val"><a href="tel:+8801700000000">+880 1700 000 000</a></div>
+            
+          </div>
+        </div>
+        <div class="c-row">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="c-lbl">Email</div>
+            <div class="c-val"><a href="mailto:openhousearcitects@gmail.com">openhousearcitects@gmail.com</a></div>
+            <div class="c-sub">Reply within 24 hours</div>
+          </div>
+        </div>
+        <div class="c-row">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="c-lbl">Address</div>
+            <div class="c-val">Suit A ,level 10 ,Haque chamber,West Panthapath<br>Dhaka 1215, Bangladesh</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hours strip -->
+    <div class="hours-strip">
+      <span>Sat – Thu &nbsp;·&nbsp; 9:00 AM – 6:00 PM</span>
+      <span class="open-badge">Open Now</span>
+    </div>
+
+    <!-- Booking form -->
+    <div class="booking-block">
+      <div class="block-label">— Book a Consultation</div>
+      <div class="form-title">Schedule your <em>appointment</em></div>
+      <div class="form-sub">60-min session with a lead architect · Free</div>
+
+      <!-- Steps -->
+      <div class="steps-bar">
+        <div class="step-item active" id="step-tab-1"><span class="step-num">01</span>Details</div>
+        <div class="step-item" id="step-tab-2"><span class="step-num">02</span>Schedule</div>
+        <div class="step-item" id="step-tab-3"><span class="step-num">03</span>Confirm</div>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="form-step active" id="form-step-1">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="fname" placeholder="Omar" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="lname" placeholder="Rahman" />
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="you@email.com" />
+        </div>
+        <div class="form-group full">
+          <label>Phone</label>
+          <input type="tel" id="phone" placeholder="+880 17..." />
+        </div>
+        <div class="form-group full">
+          <label>Project Type</label>
+          <select id="project-type">
+            <option value="">Select a service…</option>
+            <option>Residential Design</option>
+            <option>Commercial Architecture</option>
+            <option>Interior Concept</option>
+            <option>Renovation & Restoration</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Brief Description</label>
+          <textarea id="desc" placeholder="Your vision, site, or project scope..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="goStep(2)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-step" id="form-step-2">
+        <div>
+          <label style="margin-bottom:10px;display:block;">Select a Date</label>
+          <div class="date-grid" id="date-grid"></div>
+        </div>
+        <div>
+          <label style="margin-bottom:10px;display:block;">Select a Time</label>
+          <div class="time-grid" id="time-grid"></div>
+        </div>
+        <div class="form-group full">
+          <label>Meeting Format</label>
+          <select id="meeting-format">
+            <option>In-Studio Visit</option>
+            <option>Video Call (Zoom / Meet)</option>
+            <option>Site Visit</option>
+          </select>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-outline" onclick="goStep(1)">← Back</button>
+          <button class="btn btn-primary" onclick="goStep(3)">Review →</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-step" id="form-step-3">
+        <div id="summary-box"></div>
+        <div class="form-group full">
+          <label>Additional Notes</label>
+          <textarea id="notes" placeholder="Anything else for our team..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-outline" onclick="goStep(2)">← Back</button>
+          <button class="btn btn-primary" onclick="submitForm()">Confirm ✓</button>
+        </div>
+      </div>
+
+      <!-- Confirmation -->
+      <div class="confirm-box" id="confirm-box">
+        <div class="confirm-title">Appointment <em>Confirmed</em></div>
+        <div class="confirm-detail" id="confirm-detail"></div>
+        <div class="confirm-ref" id="confirm-ref"></div>
+      </div>
+    </div>
+
+    
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const state = { step: 1, date: null, time: null };
+
+  const dates = (() => {
+    const arr = []; const now = new Date();
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    for (let i = 1; i <= 10; i++) {
+      const d = new Date(now); d.setDate(now.getDate() + i);
+      if (d.getDay() === 0) continue;
+      arr.push({ day: days[d.getDay()], date: d.getDate(), month: months[d.getMonth()] });
+      if (arr.length === 8) break;
+    }
+    return arr;
+  })();
+
+  const times = ['09:00 AM','10:00 AM','11:00 AM','12:00 PM','02:00 PM','03:00 PM','04:00 PM','05:00 PM'];
+  const busy = ['11:00 AM','02:00 PM'];
+
+  function buildDateGrid() {
+    document.getElementById('date-grid').innerHTML = dates.map((d,i) => `
+      <div class="date-chip" onclick="selectDate(${i},this)">
+        <span class="d-day">${d.date}</span>
+        <span class="d-month">${d.day}·${d.month}</span>
+      </div>`).join('');
+  }
+
+  function buildTimeGrid() {
+    document.getElementById('time-grid').innerHTML = times.map(t => `
+      <div class="time-chip ${busy.includes(t)?'disabled':''}" onclick="selectTime('${t}',this)">${t}</div>`).join('');
+  }
+
+  function selectDate(i, el) {
+    state.date = dates[i];
+    document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function selectTime(t, el) {
+    state.time = t;
+    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function goStep(n) {
+    if (n === 2) {
+      if (!document.getElementById('fname').value.trim() ||
+          !document.getElementById('email').value.trim() ||
+          !document.getElementById('project-type').value) {
+        return showToast('Please fill in all required fields');
+      }
+    }
+    if (n === 3) {
+      if (!state.date) return showToast('Please select a date');
+      if (!state.time) return showToast('Please select a time slot');
+      buildSummary();
+    }
+    state.step = n;
+    document.querySelectorAll('.form-step').forEach((s,i) => s.classList.toggle('active', i+1===n));
+    document.querySelectorAll('.step-item').forEach((t,i) => {
+      t.classList.remove('active','done');
+      if (i+1===n) t.classList.add('active');
+      if (i+1<n) t.classList.add('done');
+    });
+  }
+
+  function buildSummary() {
+    const f = id => document.getElementById(id).value;
+    document.getElementById('summary-box').innerHTML = `
+      <div style="background:var(--off);padding:16px;border-left:3px solid var(--accent);font-size:12px;color:var(--mid)">
+        <div class="block-label" style="margin-bottom:10px;">— Summary</div>
+        <table style="width:100%;border-collapse:collapse;line-height:2">
+          <tr><td style="width:90px">Client</td><td style="color:var(--ink);font-weight:700">${f('fname')} ${f('lname')}</td></tr>
+          <tr><td>Email</td><td style="color:var(--ink)">${f('email')}</td></tr>
+          <tr><td>Project</td><td style="color:var(--ink)">${f('project-type')}</td></tr>
+          <tr><td>Date</td><td style="color:var(--ink)">${state.date.day}, ${state.date.date} ${state.date.month}</td></tr>
+          <tr><td>Time</td><td style="color:var(--ink)">${state.time}</td></tr>
+          <tr><td>Format</td><td style="color:var(--ink)">${f('meeting-format')}</td></tr>
+        </table>
+      </div>`;
+  }
+
+  function submitForm() {
+    const fname = document.getElementById('fname').value;
+    const email = document.getElementById('email').value;
+    const type = document.getElementById('project-type').value;
+    const ref = 'ARK-' + Math.random().toString(36).substr(2,6).toUpperCase();
+    document.querySelector('.steps-bar').style.display = 'none';
+    document.querySelectorAll('.form-step').forEach(s => s.style.display = 'none');
+    const box = document.getElementById('confirm-box');
+    box.classList.add('show');
+    document.getElementById('confirm-detail').innerHTML = `
+      Dear <strong>${fname}</strong>,<br><br>
+      Your consultation is confirmed for <strong>${state.date.day}, ${state.date.date} ${state.date.month}</strong> at <strong>${state.time}</strong>.<br>
+      Project: ${type}<br><br>
+      A confirmation has been sent to <strong>${email}</strong>.
+    `;
+    document.getElementById('confirm-ref').textContent = 'Ref. ' + ref;
+    showToast('Appointment confirmed ✓');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  buildDateGrid();
+  buildTimeGrid();
+</script>
+<script src="toggle.js"></script>
+</body>
+</html>
